@@ -1,8 +1,8 @@
 import Product from "../models/product.js";
 
-export const getAllProducts = async (res, req) => {
+export const getAllProducts = async (req, res) => {
   try {
-    const products = await Product.find({});
+    const products = await Product.find();
 
     res.status(200).json({
       success: true,
@@ -57,7 +57,7 @@ export const updateProduct = async (req, res) => {
     if (data.price !== undefined) data.price = Number(data.price);
     if (data.stock !== undefined) data.stock = Number(data.stock);
 
-    const result = await Product.updateOne({ _id: id }, { $set: data });
+    const result = await Product.findByIdAndUpdate(id, data);
 
     if (result.matchedCount === 0) {
       return res
