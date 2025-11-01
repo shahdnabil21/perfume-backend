@@ -18,8 +18,9 @@ export const getAllProducts = async (req, res) => {
   }
 };
 
-export const getProductById = async (id) => {
+export const getProductById = async (req, res) => {
   try {
+    const { id } = req.params;
     const product = await Product.findOne({ id });
     return product;
   } catch (error) {
