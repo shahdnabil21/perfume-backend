@@ -8,16 +8,20 @@ import productRoutes from "./routes/productRoutes.js";
 
 dotenv.config();
 
-const env = process.env;
+// const env = process.env;
 
-await mongoose
-  .connect(env.MONGO_URL)
-  .then(() => {
-    console.log("Connected to MongoDB");
-  })
-  .catch((error) => {
+const connectDB = async () => {
+  try {
+    await mongoose.connect(process.env.MONGO_URL, {
+      serverSelectionTimeoutMS: 10000, // 10 seconds
+    });
+    console.log("MongoDB connected successfully");
+  } catch (error) {
     console.error("MongoDB connection error:", error);
-  });
+  }
+};
+
+connectDB();
 
 const app = express();
 const PORT = 3000;
